@@ -15,7 +15,7 @@ import Plotly from '../plotly-latest.min'
 import numjs from '../bower_components/numjs/dist/numjs.min'
 import { sin, multiply, range } from 'mathjs'
 
-let time = numjs.arange(0,10,0.001).tolist()
+let time = numjs.arange(0,10,0.01).tolist()
 
 export default {
   name: "graph",
