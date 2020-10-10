@@ -1,13 +1,16 @@
 <template>
-<div>
-  <div class="slidecontainer">
-    <input type="range" min="550e+3" max="1720e+3" v-model="frequency" class="slider" id="myRange">
-    <h1>Frequency : {{ frequency }}</h1>
-    <h4>{{typeof (x)}}{{typeof(msg)}}</h4>
+  <div>
+    <div class="slidecontainer">
+      <input type="range" min="550e+3" max="1720e+3" v-model="frequency" class="slider">
+      <h1>Frequency : {{ frequency }}</h1>
+    </div>
+    <div class="slidecontainer">
+      <input type="range" min="0" max="100" v-model="modIndex" class="slider">
+      <h1>Modulation Index : {{ mu }}</h1>
+    </div>
+    <div id="graph">
+    </div>
   </div>
-  <div id="graph">
-  </div>
-</div>
 </template>
 
 <script>
@@ -21,11 +24,12 @@ let time = numjs.arange(0.01e-6,50e-6,0.01e-7).tolist()
 let msg = sin(multiply(time,100000*6.28))
 
 export default {
-name: "amplitude_mod",
+  name: "conventional AM",
   data(){
     return {
       x: time,
       msg: msg,
+      modIndex: 50,
       arr: numjs.zeros(msg.length).tolist(),
       frequency: 550e+3
     }
@@ -33,12 +37,15 @@ name: "amplitude_mod",
   computed:{
     carrier_signal(){
       return sin(multiply(this.x,this.frequency*6.28));
+    },
+    mu(){
+      return this.modIndex/100;
     }
   },
   watch:{
     frequency(){
       for(let i=0;i<this.msg.length;i++){
-        this.arr[i] = this.carrier_signal[i]*this.msg[i];
+        this.arr[i] = this.carrier_signal[i]*(1+(this.mu*this.msg[i]));
       }
       Plotly.react('graph', [{
         x: this.x,
@@ -56,11 +63,33 @@ name: "amplitude_mod",
       }],{
         grid: {rows: 1, columns: 3, pattern: 'independent'},
       });
+    },
+    mu(){
+      for(let i=0;i<this.msg.length;i++){
+        this.arr[i] = this.carrier_signal[i]*(1+(this.mu*this.msg[i]));
+      }
+      Plotly.react('graph', [{
+        x: this.x,
+        y: this.carrier_signal
+      },{
+        x:this.x,
+        y:this.msg,
+        xaxis:'x2',
+        yaxis:'y2'
+      },{
+        x:this.x,
+        y:this.arr,
+        xaxis:'x3',
+        yaxis:'y3'
+      }],{
+        grid: {rows: 1, columns: 3, pattern: 'independent'},
+      });
+      this.frequency = this.frequency++;
     }
   },
   mounted(){
     for(let i=0;i<this.msg.length;i++){
-      this.arr[i] = this.carrier_signal[i]*this.msg[i];
+      this.arr[i] = this.carrier_signal[i]*(1+this.mu*this.msg[i]);
     }
     Plotly.newPlot('graph', [{
       x: this.x,
