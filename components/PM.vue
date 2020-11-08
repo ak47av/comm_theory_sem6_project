@@ -65,6 +65,7 @@ export default {
         xaxis:'x3',
         yaxis:'y3'
       }],{
+        title: "f" + "m".sub() + " = " + this.msg_freq.toExponential() + " Hz",
         grid: {rows: 1, columns: 3, pattern: 'independent'},
       });
     },
@@ -89,6 +90,7 @@ export default {
         xaxis:'x3',
         yaxis:'y3'
       }],{
+        title: "f" + "m".sub() + " = " + this.msg_freq.toExponential() + " Hz",
         grid: {rows: 1, columns: 3, pattern: 'independent'},
       });
       this.frequency = this.frequency++;
@@ -115,6 +117,7 @@ export default {
       xaxis:'x3',
       yaxis:'y3'
     }],{
+      title: "f" + "m".sub() + " = " + this.msg_freq.toExponential() + " Hz",
       grid: {rows: 1, columns: 3, pattern: 'independent'},
     });
   }

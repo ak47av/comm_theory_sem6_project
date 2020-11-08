@@ -17,7 +17,8 @@ import {sin, multiply, cos, bignumber} from 'mathjs'
 
 //let carrier_freqs = numjs.arange(550e+3,1720e+3,100).tolist()
 let time = numjs.arange(0.01e-6,50e-6,0.008e-7).tolist()
-let msg = sin(multiply(time,100000*6.28))
+let msg_freq = 1e+5
+let msg = sin(multiply(time,msg_freq*6.28))
 
 export default {
   name: "conventional AM",
@@ -29,7 +30,8 @@ export default {
       Am: 1,
       fm: 10000,
       arr: numjs.zeros(msg.length).tolist(),
-      frequency: 550e+3
+      frequency: 550e+3,
+      msg_freq
     }
   },
   computed: {
@@ -61,6 +63,7 @@ export default {
         xaxis:'x3',
         yaxis:'y3'
       }],{
+        title: "f" + "m".sub() + " = " + this.msg_freq.toExponential() + " Hz",
         grid: {rows: 1, columns: 3, pattern: 'independent'},
       });
     }
@@ -80,6 +83,7 @@ export default {
       xaxis:'x3',
       yaxis:'y3'
     }],{
+      title: "f" + "m".sub() + " = " + this.msg_freq.toExponential() + " Hz",
       grid: {rows: 1, columns: 3, pattern: 'independent'},
     });
   }

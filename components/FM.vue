@@ -19,8 +19,8 @@ import Plotly from '../plotly-latest.min'
 import numjs from '../bower_components/numjs/dist/numjs.min'
 import {sin, multiply, cos, bignumber} from 'mathjs'
 
-let time = numjs.arange(0.01e-8,25e-8,0.01e-9).tolist()
-let msg_freq = 1e+7
+let time = numjs.arange(0,50e-8,1e-10).tolist()
+let msg_freq = 10e+6
 let msg = sin(multiply(time,msg_freq*6.28))
 let integral = multiply(-1,cos(multiply(time,msg_freq*6.28)))
 
@@ -67,6 +67,7 @@ export default {
         xaxis:'x3',
         yaxis:'y3'
       }],{
+        title: "f" + "m".sub() + " = " + this.msg_freq.toExponential() + " Hz",
         grid: {rows: 1, columns: 3, pattern: 'independent'},
       });
     },
@@ -91,6 +92,7 @@ export default {
         xaxis:'x3',
         yaxis:'y3'
       }],{
+        title: "f" + "m".sub() + " = " + this.msg_freq.toExponential() + " Hz",
         grid: {rows: 1, columns: 3, pattern: 'independent'},
       });
       this.frequency = this.frequency++;
@@ -117,6 +119,7 @@ export default {
       xaxis:'x3',
       yaxis:'y3'
     }],{
+      title: "f" + "m".sub() + " = " + this.msg_freq.toExponential() + " Hz",
       grid: {rows: 1, columns: 3, pattern: 'independent'},
     });
   }
