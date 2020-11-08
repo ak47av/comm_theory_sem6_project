@@ -15,8 +15,8 @@ import Plotly from '../plotly-latest.min'
 import numjs from '../bower_components/numjs/dist/numjs.min'
 import {sin, multiply, cos, bignumber} from 'mathjs'
 
-let carrier_freqs = numjs.arange(550e+3,1720e+3,100).tolist()
-let time = numjs.arange(0.01e-6,50e-6,0.01e-7).tolist()
+//let carrier_freqs = numjs.arange(550e+3,1720e+3,100).tolist()
+let time = numjs.arange(0.01e-6,50e-6,0.008e-7).tolist()
 let msg = sin(multiply(time,100000*6.28))
 
 export default {
@@ -27,20 +27,26 @@ export default {
       msg: msg,
       Ac: 1,
       Am: 1,
+      fm: 10000,
       arr: numjs.zeros(msg.length).tolist(),
       frequency: 550e+3
     }
   },
-  computed:{
-    carrier_signal(){
-      return sin(multiply(this.x,this.frequency*6.28));
+  computed: {
+    carrier_signal() {
+      return sin(multiply(this.x, this.frequency * 6.28));
+    }
+  },
+  methods:{
+    lower_sideband() {
+      for (let i = 0; i < this.msg.length; i++) {
+        this.arr[i] = 0.5 * this.Am * this.Ac * ((cos(2*3.14*this.frequency*this.x[i])*cos(2*3.14*this.fm*this.x[i]))+((sin(2*3.14*this.frequency*this.x[i])*sin(2*3.14*this.fm*this.x[i]))));
+      }
+      return this.arr;
     }
   },
   watch:{
     frequency(){
-      for(let i=0;i<this.msg.length;i++){
-        this.arr[i] = this.carrier_signal[i]*this.msg[i];
-      }
       Plotly.react('graph', [{
         x: this.x,
         y: this.carrier_signal
@@ -51,7 +57,7 @@ export default {
         yaxis:'y2'
       },{
         x:this.x,
-        y:this.arr,
+        y:this.lower_sideband(),
         xaxis:'x3',
         yaxis:'y3'
       }],{
@@ -60,9 +66,6 @@ export default {
     }
   },
   mounted(){
-    for(let i=0;i<this.msg.length;i++){
-      this.arr[i] = this.Ac*this.Am*this.carrier_signal[i]*this.msg[i];
-    }
     Plotly.newPlot('graph', [{
       x: this.x,
       y: this.carrier_signal
@@ -73,7 +76,7 @@ export default {
       yaxis:'y2'
     },{
       x:this.x,
-      y:this.arr,
+      y:this.lower_sideband(),
       xaxis:'x3',
       yaxis:'y3'
     }],{
@@ -85,4 +88,6 @@ export default {
 
 <style scoped>
 
+
 </style>
+
