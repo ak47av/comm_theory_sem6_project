@@ -12,7 +12,6 @@
     </div>
   </div>
 </template>
-
 <script>
 
 import Plotly from '../plotly-latest.min'

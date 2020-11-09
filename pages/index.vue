@@ -3,24 +3,24 @@
     <div>
       <Logo />
       <h1 class="title">
-        project
+        Modulation schemes
       </h1>
       <div class="links">
         <a
-          href="https://nuxtjs.org/"
+          href="/amplitude_mod"
           target="_blank"
           rel="noopener noreferrer"
           class="button--green"
         >
-          Documentation
+          Amplitude Modulation
         </a>
         <a
-          href="https://github.com/nuxt/nuxt.js"
+          href="/frequency_mod"
           target="_blank"
           rel="noopener noreferrer"
           class="button--grey"
         >
-          GitHub
+          Frequency Modulation
         </a>
       </div>
     </div>
