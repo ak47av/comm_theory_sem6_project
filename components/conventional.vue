@@ -16,7 +16,7 @@
 <script>
 
 import Plotly from '../plotly-latest.min'
-import numjs from '../bower_components/numjs/dist/numjs.min'
+import numjs from '../numjs.min'
 import {sin, multiply} from 'mathjs'
 
 let time = numjs.arange(0,25e-6,0.01e-7).tolist()

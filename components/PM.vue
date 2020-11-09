@@ -16,8 +16,8 @@
 <script>
 
 import Plotly from '../plotly-latest.min'
-import numjs from '../bower_components/numjs/dist/numjs.min'
-import {sin, multiply, cos, bignumber} from 'mathjs'
+import numjs from '../numjs.min'
+import {sin, multiply, cos} from 'mathjs'
 
 let time = numjs.arange(0,50e-8,1e-10).tolist()
 let msg_freq = 10e+6
