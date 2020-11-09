@@ -17,9 +17,8 @@
 
 import Plotly from '../plotly-latest.min'
 import numjs from '../bower_components/numjs/dist/numjs.min'
-import {sin, multiply, cos, bignumber} from 'mathjs'
+import {sin, multiply} from 'mathjs'
 
-//let carrier_freqs = numjs.arange(550e+3,1720e+3,100).tolist()
 let time = numjs.arange(0,25e-6,0.01e-7).tolist()
 let msg_freq = 10e+4
 let msg = sin(multiply(time,msg_freq*6.28))
